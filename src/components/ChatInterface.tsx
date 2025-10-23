@@ -23,19 +23,33 @@ export function ChatInterface() {
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight
+    }
   }
 
   useEffect(() => {
-    scrollToBottom()
+    // Smooth scroll to bottom when messages change
+    if (messagesContainerRef.current) {
+      const scrollHeight = messagesContainerRef.current.scrollHeight
+      messagesContainerRef.current.scrollTo({
+        top: scrollHeight,
+        behavior: 'smooth'
+      })
+    }
   }, [messages])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim() || isLoading) return
+
+    // Expand chat
+    setIsExpanded(true)
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -71,12 +85,22 @@ export function ChatInterface() {
       }
 
       setMessages(prev => [...prev, assistantMessage])
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error)
+
+      let errorContent = 'Sorry, I encountered an error. Please try again.'
+
+      // Handle specific error cases
+      if (error.message && error.message.includes('429')) {
+        errorContent = 'You\'ve reached the rate limit. Please wait a moment before sending another message.'
+      } else if (error.message && error.message.includes('timeout')) {
+        errorContent = 'The request took too long. Please try with a shorter message.'
+      }
+
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: 'Sorry, I encountered an error. Please try again.',
+        content: errorContent,
         timestamp: new Date()
       }
       setMessages(prev => [...prev, errorMessage])
@@ -86,8 +110,17 @@ export function ChatInterface() {
   }
 
   return (
-    <div className="card max-w-4xl mx-auto bg-white/80 backdrop-blur-sm border-2 border-tuscan-200">
-      <div className="h-96 overflow-y-auto mb-6 space-y-6 px-2">
+    <div className={`card max-w-4xl mx-auto bg-white/80 backdrop-blur-sm border-2 border-tuscan-200 transition-all duration-500 ease-in-out ${
+        isExpanded ? 'shadow-2xl' : ''
+      }`}
+    >
+      <div
+        ref={messagesContainerRef}
+        className={`overflow-y-auto mb-6 space-y-6 px-2 transition-all duration-500 ease-in-out scroll-smooth ${
+          isExpanded ? 'h-[36rem]' : 'h-96'
+        }`}
+        style={{ scrollBehavior: 'smooth' }}
+      >
         {messages.map((message) => (
           <div
             key={message.id}
@@ -117,12 +150,20 @@ export function ChatInterface() {
                 {message.role === 'assistant' ? (
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
-                    className="prose prose-sm max-w-none"
+                    className="prose prose-sm max-w-none prose-charcoal
+                      prose-headings:text-charcoal-900 prose-headings:font-serif prose-headings:mb-3 prose-headings:mt-4 first:prose-headings:mt-0
+                      prose-p:text-charcoal-800 prose-p:leading-relaxed prose-p:mb-4
+                      prose-ul:my-4 prose-ul:space-y-3
+                      prose-ol:my-4 prose-ol:space-y-3
+                      prose-li:text-charcoal-800 prose-li:leading-relaxed prose-li:mb-2
+                      prose-strong:text-charcoal-900 prose-strong:font-semibold
+                      prose-a:text-terracotta-600 prose-a:no-underline hover:prose-a:underline
+                      [&>*:last-child]:mb-0"
                   >
                     {message.content}
                   </ReactMarkdown>
                 ) : (
-                  <p className="text-sm">{message.content}</p>
+                  <p className="text-sm leading-relaxed">{message.content}</p>
                 )}
               </div>
             </div>
@@ -151,14 +192,24 @@ export function ChatInterface() {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onFocus={() => setIsExpanded(true)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault()
+              const form = e.currentTarget.form
+              if (form) {
+                form.requestSubmit()
+              }
+            }
+          }}
           placeholder="Ask about wineries, restaurants, experiences, or anything wine country..."
-          className="flex-1 input-field shadow-sm"
+          className="flex-1 input-field shadow-sm transition-all duration-300"
           disabled={isLoading}
         />
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className="btn-primary bg-terracotta-600 hover:bg-terracotta-700 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed min-w-[120px] justify-center"
+          className="btn-primary bg-terracotta-600 hover:bg-terracotta-700 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed min-w-[120px] justify-center transition-all duration-300"
         >
           <Send size={18} />
           <span>Send</span>

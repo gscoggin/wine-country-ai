@@ -1,6 +1,11 @@
-# Wine Country AI
+# Sip.AI - Your Personal Wine Country Concierge 🍷
 
-An AI-powered platform for discovering and planning wine country adventures in Northern California. Built with Next.js, TypeScript, and Tailwind CSS.
+An AI-powered platform for discovering and planning wine country adventures in Northern California, featuring Sonoma, Napa, and Mendocino regions.
+
+![Next.js](https://img.shields.io/badge/Next.js-14.2-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3-38bdf8)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 ## Features
 
@@ -32,12 +37,27 @@ An AI-powered platform for discovering and planning wine country adventures in N
 
 - **Framework**: Next.js 14 with App Router
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS with custom wine-themed colors
-- **AI**: OpenAI GPT-4 API
-- **Authentication**: NextAuth.js (configured but using mock data)
-- **Database**: Prisma (configured but using static data)
+- **Styling**: Tailwind CSS with Tuscan-inspired design system
+- **AI**: OpenAI GPT-4o-mini API
+- **Testing**: Jest + React Testing Library
+- **CI/CD**: GitHub Actions
+- **Deployment**: Vercel
 - **Icons**: Lucide React
-- **UI Components**: Custom components with Tailwind
+- **Image Optimization**: Sharp
+
+## 🔐 API Cost Protection
+
+Built-in rate limiting prevents unexpected API costs:
+
+- **10 requests/minute** per IP address
+- **100 requests/day** per IP address
+- **500 character** maximum message length
+- **30 second** timeout on API calls
+- **800 token** limit per response
+
+**Expected costs:** $1-5/day with normal usage
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed cost monitoring and deployment guide.
 
 ## Getting Started
 
@@ -75,6 +95,17 @@ npm run dev
 ```
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📦 Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Create production build
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm test` - Run tests in watch mode
+- `npm run test:ci` - Run tests for CI
+- `npm run test:coverage` - Run tests with coverage
+- `npm run optimize-images` - Optimize hero images
 
 ## Project Structure
 

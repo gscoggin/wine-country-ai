@@ -20,7 +20,7 @@ const regions: Region[] = [
     specialties: ['Cabernet Sauvignon', 'Chardonnay', 'Sparkling Wine'],
     bestTime: 'September - November',
     imageUrl: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=600',
-    color: 'from-wine-500 to-wine-700'
+    color: 'from-terracotta-500 to-terracotta-700'
   },
   {
     name: 'Sonoma County',
@@ -29,7 +29,7 @@ const regions: Region[] = [
     specialties: ['Pinot Noir', 'Chardonnay', 'Zinfandel'],
     bestTime: 'May - October',
     imageUrl: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600',
-    color: 'from-vineyard-500 to-vineyard-700'
+    color: 'from-sage-500 to-sage-700'
   },
   {
     name: 'Mendocino County',
@@ -46,7 +46,7 @@ export function WineRegions() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {regions.map((region) => (
-        <div key={region.name} className="card group hover:shadow-xl transition-shadow duration-300">
+        <div key={region.name} className="card group hover:shadow-xl transition-shadow duration-300 flex flex-col">
           <div className={`h-48 bg-gradient-to-br ${region.color} rounded-lg mb-4 relative overflow-hidden`}>
             <img
               src={region.imageUrl}
@@ -58,8 +58,8 @@ export function WineRegions() {
               <h3 className="text-2xl font-bold">{region.name}</h3>
             </div>
           </div>
-          
-          <div className="space-y-4">
+
+          <div className="space-y-4 flex-1 flex flex-col">
             <p className="text-gray-600">{region.description}</p>
             
             <div className="flex items-center space-x-4 text-sm text-gray-500">
@@ -73,21 +73,21 @@ export function WineRegions() {
               </div>
             </div>
             
-            <div>
+            <div className="flex-1">
               <h4 className="font-semibold text-gray-900 mb-2">Specialties:</h4>
               <div className="flex flex-wrap gap-2">
                 {region.specialties.map((specialty) => (
                   <span
                     key={specialty}
-                    className="px-3 py-1 bg-wine-100 text-wine-700 rounded-full text-sm"
+                    className="px-3 py-1 bg-terracotta-100 text-terracotta-700 rounded-full text-sm"
                   >
                     {specialty}
                   </span>
                 ))}
               </div>
             </div>
-            
-            <button className="w-full btn-primary">
+
+            <button className="w-full btn-primary mt-4">
               Explore {region.name}
             </button>
           </div>

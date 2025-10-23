@@ -66,30 +66,30 @@ export function AdBanner() {
   if (!isVisible) return null
 
   return (
-    <div className="bg-gradient-to-r from-gold-50 to-wine-50 border-y border-gold-200 py-4">
+    <div className="bg-gradient-to-r from-tuscan-50 to-terracotta-50 border-y border-terracotta-200 py-4 sm:py-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:justify-between">
+          <div className="flex items-start sm:items-center space-x-3 sm:space-x-4 flex-1">
             <img
               src={currentAd.imageUrl}
               alt={currentAd.title}
-              className="w-16 h-16 rounded-lg object-cover"
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg object-cover shadow-md flex-shrink-0"
             />
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900">{currentAd.title}</h3>
-              <p className="text-sm text-gray-600">{currentAd.description}</p>
+            <div className="flex-1 min-w-0">
+              <h3 className="text-base sm:text-lg font-semibold text-charcoal-900 mb-1">{currentAd.title}</h3>
+              <p className="text-sm text-charcoal-700">{currentAd.description}</p>
             </div>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3 sm:space-x-4 w-full sm:w-auto">
             <button
               onClick={() => window.open(currentAd.link, '_blank')}
-              className="btn-primary text-sm"
+              className="btn-primary text-sm flex-1 sm:flex-initial"
             >
               Learn More
             </button>
             <button
               onClick={() => setIsVisible(false)}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-charcoal-400 hover:text-charcoal-600 transition-colors p-2"
             >
               ✕
             </button>

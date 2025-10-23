@@ -127,28 +127,28 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 mb-8">
+    <div className="bg-white rounded-xl shadow-lg border border-terracotta-100 p-4 sm:p-6 mb-8">
       {/* Search Bar */}
-      <div className="flex flex-col md:flex-row gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6">
         <div className="flex-1 relative">
-          <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-charcoal-400" />
           <input
             type="text"
             placeholder={`Search ${type}...`}
             value={filters.query}
             onChange={(e) => handleInputChange('query', e.target.value)}
-            className="input-field pl-10"
+            className="input-field pl-10 w-full"
           />
         </div>
         <button
           onClick={handleSearch}
-          className="btn-primary px-8"
+          className="btn-primary px-6 sm:px-8 w-full sm:w-auto"
         >
           Search
         </button>
         <button
           onClick={() => setShowAdvanced(!showAdvanced)}
-          className="btn-secondary flex items-center space-x-2"
+          className="btn-secondary flex items-center justify-center space-x-2 w-full sm:w-auto"
         >
           <Filter size={16} />
           <span>Filters</span>
@@ -161,10 +161,10 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
           <button
             key={region.value}
             onClick={() => handleInputChange('region', region.value)}
-            className={`px-3 py-1 rounded-full text-sm transition-colors ${
+            className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
               filters.region === region.value
-                ? 'bg-wine-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                ? 'bg-terracotta-600 text-white shadow-md'
+                : 'bg-tuscan-100 text-charcoal-700 hover:bg-terracotta-100'
             }`}
           >
             {region.label}
@@ -177,7 +177,7 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
         <div className="border-t border-gray-100 pt-6 space-y-6">
           {/* Price Range */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-charcoal-700 mb-3">
               Price Range
             </label>
             <div className="flex flex-wrap gap-2">
@@ -185,10 +185,10 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
                 <button
                   key={range.value}
                   onClick={() => handleInputChange('priceRange', range.value)}
-                  className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
                     filters.priceRange === range.value
-                      ? 'bg-wine-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-terracotta-600 text-white shadow-md'
+                      : 'bg-tuscan-100 text-charcoal-700 hover:bg-terracotta-100'
                   }`}
                 >
                   {range.label}
@@ -199,18 +199,18 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
 
           {/* Rating */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-charcoal-700 mb-3">
               Minimum Rating
             </label>
-            <div className="flex items-center space-x-2">
+            <div className="flex flex-wrap gap-2">
               {[4, 4.5, 4.8, 4.9].map((rating) => (
                 <button
                   key={rating}
                   onClick={() => handleInputChange('rating', rating)}
-                  className={`flex items-center space-x-1 px-3 py-1 rounded-full text-sm transition-colors ${
+                  className={`flex items-center space-x-1 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
                     filters.rating === rating
-                      ? 'bg-wine-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-gold-600 text-white shadow-md'
+                      : 'bg-tuscan-100 text-charcoal-700 hover:bg-gold-100'
                   }`}
                 >
                   <Star size={14} className="fill-current" />
@@ -222,7 +222,7 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
 
           {/* Amenities */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-charcoal-700 mb-3">
               Amenities
             </label>
             <div className="flex flex-wrap gap-2">
@@ -230,10 +230,10 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
                 <button
                   key={amenity}
                   onClick={() => handleAmenityToggle(amenity)}
-                  className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
                     filters.amenities.includes(amenity)
-                      ? 'bg-vineyard-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-sage-600 text-white shadow-md'
+                      : 'bg-tuscan-100 text-charcoal-700 hover:bg-sage-100'
                   }`}
                 >
                   {amenity}
@@ -244,8 +244,8 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
 
           {/* Specialties */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              {type === 'wineries' ? 'Wine Specialties' : 
+            <label className="block text-sm font-medium text-charcoal-700 mb-3">
+              {type === 'wineries' ? 'Wine Specialties' :
                type === 'restaurants' ? 'Cuisine Types' :
                type === 'hotels' ? 'Hotel Types' : 'Specialties'}
             </label>
@@ -254,10 +254,10 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
                 <button
                   key={specialty}
                   onClick={() => handleSpecialtyToggle(specialty)}
-                  className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
                     filters.specialties.includes(specialty)
-                      ? 'bg-gold-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-terracotta-600 text-white shadow-md'
+                      : 'bg-tuscan-100 text-charcoal-700 hover:bg-terracotta-100'
                   }`}
                 >
                   {specialty}
@@ -287,19 +287,19 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
           {/* Active Filters */}
           {(filters.amenities.length > 0 || filters.specialties.length > 0 || filters.rating > 0) && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-charcoal-700 mb-3">
                 Active Filters
               </label>
               <div className="flex flex-wrap gap-2">
                 {filters.amenities.map((amenity) => (
                   <span
                     key={amenity}
-                    className="inline-flex items-center space-x-1 px-3 py-1 bg-vineyard-100 text-vineyard-800 rounded-full text-sm"
+                    className="inline-flex items-center space-x-1 px-3 py-1.5 bg-sage-100 text-sage-800 rounded-full text-sm font-medium"
                   >
                     <span>{amenity}</span>
                     <button
                       onClick={() => handleAmenityToggle(amenity)}
-                      className="hover:text-vineyard-600"
+                      className="hover:text-sage-600 transition-colors"
                     >
                       <X size={12} />
                     </button>
@@ -308,23 +308,23 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
                 {filters.specialties.map((specialty) => (
                   <span
                     key={specialty}
-                    className="inline-flex items-center space-x-1 px-3 py-1 bg-gold-100 text-gold-800 rounded-full text-sm"
+                    className="inline-flex items-center space-x-1 px-3 py-1.5 bg-terracotta-100 text-terracotta-800 rounded-full text-sm font-medium"
                   >
                     <span>{specialty}</span>
                     <button
                       onClick={() => handleSpecialtyToggle(specialty)}
-                      className="hover:text-gold-600"
+                      className="hover:text-terracotta-600 transition-colors"
                     >
                       <X size={12} />
                     </button>
                   </span>
                 ))}
                 {filters.rating > 0 && (
-                  <span className="inline-flex items-center space-x-1 px-3 py-1 bg-wine-100 text-wine-800 rounded-full text-sm">
+                  <span className="inline-flex items-center space-x-1 px-3 py-1.5 bg-gold-100 text-gold-800 rounded-full text-sm font-medium">
                     <span>{filters.rating}+ Rating</span>
                     <button
                       onClick={() => handleInputChange('rating', 0)}
-                      className="hover:text-wine-600"
+                      className="hover:text-gold-600 transition-colors"
                     >
                       <X size={12} />
                     </button>
@@ -338,7 +338,7 @@ export function SearchFilters({ onSearch, type }: SearchFiltersProps) {
           <div className="flex justify-end">
             <button
               onClick={clearFilters}
-              className="text-sm text-gray-600 hover:text-gray-800 underline"
+              className="text-sm text-terracotta-600 hover:text-terracotta-700 font-medium underline transition-colors"
             >
               Clear All Filters
             </button>

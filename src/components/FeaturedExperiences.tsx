@@ -104,30 +104,30 @@ export function FeaturedExperiences() {
             <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-sm font-medium">
               {experience.type}
             </div>
-            <div className="absolute top-4 left-4 bg-wine-600 text-white px-2 py-1 rounded-full text-sm font-medium">
+            <div className="absolute top-4 left-4 bg-terracotta-600 text-white px-3 py-1.5 rounded-full text-sm font-medium shadow-md">
               {experience.region}
             </div>
           </div>
-          
+
           <div className="space-y-3">
             <div className="flex items-start justify-between">
-              <h3 className="text-lg font-semibold text-gray-900 group-hover:text-wine-600 transition-colors">
+              <h3 className="text-lg font-semibold text-charcoal-900 group-hover:text-terracotta-600 transition-colors leading-tight">
                 {experience.name}
               </h3>
-              <div className="flex items-center space-x-1 text-sm text-gray-500">
-                <Star size={16} className="text-yellow-400 fill-current" />
-                <span>{experience.rating}</span>
+              <div className="flex items-center space-x-1 text-sm text-charcoal-600">
+                <Star size={16} className="text-gold-500 fill-current" />
+                <span className="font-medium">{experience.rating}</span>
               </div>
             </div>
-            
-            <p className="text-gray-600 text-sm">{experience.description}</p>
-            
-            <div className="flex items-center justify-between text-sm text-gray-500">
-              <div className="flex items-center space-x-1">
+
+            <p className="text-charcoal-700 text-sm leading-relaxed">{experience.description}</p>
+
+            <div className="flex items-center justify-between text-sm text-charcoal-600 pt-2 border-t border-tuscan-100">
+              <div className="flex items-center space-x-1.5">
                 <Clock size={16} />
                 <span>{experience.duration}</span>
               </div>
-              <div className="text-wine-600 font-semibold">
+              <div className="text-terracotta-600 font-semibold text-base">
                 {experience.price}
               </div>
             </div>

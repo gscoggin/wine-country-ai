@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+
+// Page metadata is defined in parent layout, but we could add specific metadata here if needed
 import { MapPin, Phone, Globe, Star, Wine, Utensils, Bed, Clock, DollarSign } from 'lucide-react'
 import { SearchFilters, SearchFilters as SearchFiltersType } from '@/components/SearchFilters'
 import { wineries } from '@/data/wineries'
@@ -120,13 +122,13 @@ export default function DirectoryPage() {
     const itemType = (item as any).itemType
     switch (itemType) {
       case 'winery':
-        return <Wine size={20} className="text-wine-600" />
+        return <Wine size={20} className="text-terracotta-600" />
       case 'restaurant':
-        return <Utensils size={20} className="text-vineyard-600" />
+        return <Utensils size={20} className="text-sage-600" />
       case 'hotel':
         return <Bed size={20} className="text-gold-600" />
       default:
-        return <MapPin size={20} className="text-gray-600" />
+        return <MapPin size={20} className="text-charcoal-600" />
     }
   }
 
@@ -162,12 +164,14 @@ export default function DirectoryPage() {
     : filteredItems.filter(item => getItemType(item) === activeTab.slice(0, -1)) // Remove 's' from plural
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-tuscan-50 to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Wine Country Directory</h1>
-          <p className="text-xl text-gray-600">
+        <div className="text-center mb-8 sm:mb-12 space-y-3">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-charcoal-900 mb-3">
+            Wine Country Directory
+          </h1>
+          <p className="text-lg sm:text-xl text-charcoal-700 max-w-2xl mx-auto leading-relaxed">
             Discover the best wineries, restaurants, and hotels in Northern California
           </p>
         </div>
@@ -176,8 +180,8 @@ export default function DirectoryPage() {
         <SearchFilters onSearch={handleSearch} type={activeTab} />
 
         {/* Tabs */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-lg p-1 shadow-sm border border-gray-200">
+        <div className="flex justify-center mb-8 overflow-x-auto pb-2">
+          <div className="bg-white rounded-full p-1.5 shadow-md border border-terracotta-100 inline-flex min-w-max">
             {[
               { key: 'all', label: 'All', count: filteredItems.length },
               { key: 'wineries', label: 'Wineries', count: filteredItems.filter(item => getItemType(item) === 'winery').length },
@@ -187,10 +191,10 @@ export default function DirectoryPage() {
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key as any)}
-                className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-4 sm:px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
                   activeTab === tab.key
-                    ? 'bg-wine-600 text-white'
-                    : 'text-gray-700 hover:text-wine-600 hover:bg-wine-50'
+                    ? 'bg-terracotta-600 text-white shadow-md'
+                    : 'text-charcoal-700 hover:text-terracotta-600 hover:bg-terracotta-50'
                 }`}
               >
                 {tab.label} ({tab.count})
@@ -200,48 +204,48 @@ export default function DirectoryPage() {
         </div>
 
         {/* Results */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredByTab.map((item) => (
-            <div key={item.id} className="card hover:shadow-xl transition-shadow duration-300">
+            <div key={item.id} className="card hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="relative mb-4">
                 <img
                   src={item.imageUrl}
                   alt={item.name}
-                  className="w-full h-48 object-cover rounded-lg"
+                  className="w-full h-48 sm:h-56 object-cover rounded-lg"
                 />
-                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-sm font-medium flex items-center space-x-1">
+                <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium flex items-center space-x-1.5 shadow-md">
                   {getItemIcon(item)}
                   <span className="capitalize">{getItemType(item)}</span>
                 </div>
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-sm font-medium flex items-center space-x-1">
-                  <Star size={14} className="text-yellow-400 fill-current" />
-                  <span>{item.rating}</span>
+                <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-2.5 py-1.5 rounded-full text-xs font-medium flex items-center space-x-1 shadow-md">
+                  <Star size={14} className="text-gold-500 fill-current" />
+                  <span className="text-charcoal-900">{item.rating}</span>
                 </div>
               </div>
 
               <div className="space-y-3">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
-                  <div className="flex items-center space-x-1 text-sm text-gray-500 mb-2">
+                  <h3 className="text-lg font-semibold text-charcoal-900 mb-1.5 leading-tight">{item.name}</h3>
+                  <div className="flex items-center space-x-1.5 text-sm text-charcoal-600 mb-2">
                     <MapPin size={14} />
                     <span>{item.region}</span>
                   </div>
-                  <p className="text-gray-600 text-sm line-clamp-2">{item.description}</p>
+                  <p className="text-charcoal-700 text-sm line-clamp-2 leading-relaxed">{item.description}</p>
                 </div>
 
                 {getItemSpecialties(item).length > 0 && (
                   <div>
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-1.5">
                       {getItemSpecialties(item).slice(0, 3).map((specialty: string) => (
                         <span
                           key={specialty}
-                          className="px-2 py-1 bg-wine-100 text-wine-700 rounded-full text-xs"
+                          className="px-2.5 py-1 bg-terracotta-100 text-terracotta-700 rounded-full text-xs font-medium"
                         >
                           {specialty}
                         </span>
                       ))}
                       {getItemSpecialties(item).length > 3 && (
-                        <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
+                        <span className="px-2.5 py-1 bg-tuscan-100 text-tuscan-700 rounded-full text-xs font-medium">
                           +{getItemSpecialties(item).length - 3} more
                         </span>
                       )}
@@ -249,32 +253,32 @@ export default function DirectoryPage() {
                   </div>
                 )}
 
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center space-x-1 text-gray-500">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-sm pt-2 border-t border-tuscan-100">
+                  <div className="flex items-center space-x-1.5 text-charcoal-600 font-medium">
                     <DollarSign size={14} />
                     <span>{getItemPrice(item)}</span>
                   </div>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-3">
                     <a
                       href={item.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-wine-600 hover:text-wine-700 flex items-center space-x-1"
+                      className="text-terracotta-600 hover:text-terracotta-700 flex items-center space-x-1 transition-colors"
                     >
                       <Globe size={14} />
-                      <span>Website</span>
+                      <span className="text-xs sm:text-sm">Website</span>
                     </a>
                     <a
                       href={`tel:${item.phone}`}
-                      className="text-wine-600 hover:text-wine-700 flex items-center space-x-1"
+                      className="text-terracotta-600 hover:text-terracotta-700 flex items-center space-x-1 transition-colors"
                     >
                       <Phone size={14} />
-                      <span>Call</span>
+                      <span className="text-xs sm:text-sm">Call</span>
                     </a>
                   </div>
                 </div>
 
-                <button className="w-full btn-primary text-sm">
+                <button className="w-full btn-primary text-sm mt-2">
                   View Details
                 </button>
               </div>
