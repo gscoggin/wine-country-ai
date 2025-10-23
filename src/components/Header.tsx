@@ -18,29 +18,29 @@ export function Header() {
 
   return (
     <>
-      <header className="bg-white/80 backdrop-blur-sm border-b border-wine-100 sticky top-0 z-50">
+      <header className="bg-white/90 backdrop-blur-md border-b border-tuscan-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-wine-600 to-vineyard-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">🍷</span>
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-terracotta-500 to-terracotta-700 rounded-full flex items-center justify-center shadow-md">
+                <span className="text-white font-bold text-lg">🍷</span>
               </div>
-              <h1 className="text-xl font-bold text-wine-800">Wine Country AI</h1>
+              <h1 className="text-2xl font-serif font-bold text-charcoal-900">Sip<span className="text-terracotta-600">.AI</span></h1>
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8">
-              <a href="/" className="text-gray-700 hover:text-wine-600 transition-colors">
+            <nav className="hidden md:flex space-x-10">
+              <a href="/" className="text-charcoal-700 hover:text-terracotta-600 transition-colors font-medium">
                 Home
               </a>
-              <a href="/directory" className="text-gray-700 hover:text-wine-600 transition-colors">
+              <a href="/directory" className="text-charcoal-700 hover:text-terracotta-600 transition-colors font-medium">
                 Directory
               </a>
-              <a href="/trips" className="text-gray-700 hover:text-wine-600 transition-colors">
+              <a href="/trips" className="text-charcoal-700 hover:text-terracotta-600 transition-colors font-medium">
                 My Trips
               </a>
-              <a href="/about" className="text-gray-700 hover:text-wine-600 transition-colors">
+              <a href="/about" className="text-charcoal-700 hover:text-terracotta-600 transition-colors font-medium">
                 About
               </a>
             </nav>
@@ -51,10 +51,10 @@ export function Header() {
                 <div className="relative">
                   <button
                     onClick={() => setShowUserMenu(!showUserMenu)}
-                    className="flex items-center space-x-2 text-gray-700 hover:text-wine-600 transition-colors"
+                    className="flex items-center space-x-2 text-charcoal-700 hover:text-terracotta-600 transition-colors"
                   >
-                    <div className="w-8 h-8 bg-wine-100 rounded-full flex items-center justify-center">
-                      <User size={16} className="text-wine-600" />
+                    <div className="w-10 h-10 bg-terracotta-100 rounded-full flex items-center justify-center">
+                      <User size={18} className="text-terracotta-600" />
                     </div>
                     <span className="hidden sm:block text-sm font-medium">{user.name}</span>
                   </button>
@@ -102,7 +102,7 @@ export function Header() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
-                className="md:hidden text-gray-700 hover:text-wine-600 transition-colors"
+                className="md:hidden text-charcoal-700 hover:text-terracotta-600 transition-colors"
               >
                 {showMobileMenu ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -111,32 +111,32 @@ export function Header() {
 
           {/* Mobile Navigation */}
           {showMobileMenu && (
-            <div className="md:hidden border-t border-wine-100 py-4">
+            <div className="md:hidden border-t border-tuscan-200 py-4">
               <nav className="flex flex-col space-y-4">
                 <a
                   href="/"
-                  className="text-gray-700 hover:text-wine-600 transition-colors"
+                  className="text-charcoal-700 hover:text-terracotta-600 transition-colors font-medium"
                   onClick={() => setShowMobileMenu(false)}
                 >
                   Home
                 </a>
                 <a
                   href="/directory"
-                  className="text-gray-700 hover:text-wine-600 transition-colors"
+                  className="text-charcoal-700 hover:text-terracotta-600 transition-colors font-medium"
                   onClick={() => setShowMobileMenu(false)}
                 >
                   Directory
                 </a>
                 <a
                   href="/trips"
-                  className="text-gray-700 hover:text-wine-600 transition-colors"
+                  className="text-charcoal-700 hover:text-terracotta-600 transition-colors font-medium"
                   onClick={() => setShowMobileMenu(false)}
                 >
                   My Trips
                 </a>
                 <a
                   href="/about"
-                  className="text-gray-700 hover:text-wine-600 transition-colors"
+                  className="text-charcoal-700 hover:text-terracotta-600 transition-colors font-medium"
                   onClick={() => setShowMobileMenu(false)}
                 >
                   About

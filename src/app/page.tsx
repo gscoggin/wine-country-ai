@@ -10,21 +10,31 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-wine-600 to-vineyard-600 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Discover Wine Country
+      <section className="relative bg-gradient-to-br from-terracotta-400 via-tuscan-300 to-gold-400 text-charcoal-900 py-32 overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-charcoal-900 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-charcoal-900 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center space-y-8">
+            <div className="inline-block">
+              <span className="text-sm uppercase tracking-widest text-charcoal-700 font-medium">Your Personal Wine Country Concierge</span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 text-charcoal-900 leading-tight">
+              Savor Every Moment<br/>
+              <span className="text-terracotta-800">in Wine Country</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-wine-100">
-              Your AI-powered guide to Sonoma, Napa, and Mendocino
+            <p className="text-xl md:text-2xl mb-10 text-charcoal-800 max-w-3xl mx-auto leading-relaxed">
+              Experience the finest wineries, restaurants, and hideaways across Sonoma, Napa, and Mendocino—curated by your AI sommelier.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/directory" className="btn-primary bg-white text-wine-600 hover:bg-wine-50 text-center">
-                Explore Directory
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <a href="/directory" className="btn-primary bg-charcoal-900 hover:bg-charcoal-800 text-white shadow-xl hover:shadow-2xl text-center min-w-[200px]">
+                Explore Discoveries
               </a>
-              <a href="/trips" className="btn-secondary border-2 border-white text-white hover:bg-white hover:text-vineyard-600 text-center">
-                Start Planning
+              <a href="/trips" className="btn-secondary bg-white/80 backdrop-blur-sm hover:bg-white text-charcoal-900 border-2 border-charcoal-900 text-center min-w-[200px]">
+                Plan Your Journey
               </a>
             </div>
           </div>
@@ -35,14 +45,14 @@ export default function Home() {
       <AdBanner />
 
       {/* Chat Interface Section */}
-      <section className="py-16 bg-white">
+      <section className="py-24 bg-gradient-to-b from-white to-tuscan-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Ask Me Anything About Wine Country
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-charcoal-900 mb-4">
+              Your Personal Wine Concierge
             </h2>
-            <p className="text-lg text-gray-600">
-              Get personalized recommendations for wineries, restaurants, hotels, and experiences
+            <p className="text-xl text-charcoal-700 leading-relaxed max-w-2xl mx-auto">
+              Ask about wineries, restaurants, accommodations, or let us craft the perfect itinerary for your wine country escape
             </p>
           </div>
           <ChatInterface />
@@ -50,14 +60,14 @@ export default function Home() {
       </section>
 
       {/* Wine Regions */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Explore Our Wine Regions
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-charcoal-900">
+              Explore the Regions
             </h2>
-            <p className="text-lg text-gray-600">
-              Discover the unique character of each wine region
+            <p className="text-xl text-charcoal-700 max-w-2xl mx-auto">
+              Each wine region offers its own distinct character and charm
             </p>
           </div>
           <WineRegions />
@@ -65,14 +75,14 @@ export default function Home() {
       </section>
 
       {/* Featured Experiences */}
-      <section className="py-16 bg-white">
+      <section className="py-24 bg-gradient-to-b from-tuscan-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Featured Experiences
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-charcoal-900">
+              Curated Experiences
             </h2>
-            <p className="text-lg text-gray-600">
-              Curated recommendations for your perfect wine country getaway
+            <p className="text-xl text-charcoal-700 max-w-2xl mx-auto">
+              Handpicked moments that define the wine country lifestyle
             </p>
           </div>
           <FeaturedExperiences />

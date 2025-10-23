@@ -17,7 +17,7 @@ export function ChatInterface() {
     {
       id: '1',
       role: 'assistant',
-      content: 'Hello! I\'m your Wine Country AI assistant. I can help you plan the perfect trip to Sonoma, Napa, or Mendocino. What would you like to know?',
+      content: 'Welcome to Sip.AI! I\'m your personal wine country concierge. Whether you\'re seeking the perfect Cabernet, a hidden gem restaurant, or planning an unforgettable weekend escape—I\'m here to guide you. What sounds lovely today?',
       timestamp: new Date()
     }
   ])
@@ -86,8 +86,8 @@ export function ChatInterface() {
   }
 
   return (
-    <div className="card max-w-4xl mx-auto">
-      <div className="h-96 overflow-y-auto mb-4 space-y-4">
+    <div className="card max-w-4xl mx-auto bg-white/80 backdrop-blur-sm border-2 border-tuscan-200">
+      <div className="h-96 overflow-y-auto mb-6 space-y-6 px-2">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -99,19 +99,19 @@ export function ChatInterface() {
               }`}
             >
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                className={`w-10 h-10 rounded-full flex items-center justify-center shadow-md ${
                   message.role === 'user'
-                    ? 'bg-wine-600 text-white'
-                    : 'bg-vineyard-600 text-white'
+                    ? 'bg-terracotta-600 text-white'
+                    : 'bg-sage-600 text-white'
                 }`}
               >
-                {message.role === 'user' ? <User size={16} /> : <Bot size={16} />}
+                {message.role === 'user' ? <User size={18} /> : <Bot size={18} />}
               </div>
               <div
-                className={`px-4 py-2 rounded-lg ${
+                className={`px-5 py-3 rounded-2xl shadow-sm ${
                   message.role === 'user'
-                    ? 'bg-wine-600 text-white'
-                    : 'bg-gray-100 text-gray-900'
+                    ? 'bg-terracotta-600 text-white'
+                    : 'bg-tuscan-50 text-charcoal-900 border border-tuscan-200'
                 }`}
               >
                 {message.role === 'assistant' ? (
@@ -131,13 +131,13 @@ export function ChatInterface() {
         {isLoading && (
           <div className="flex justify-start">
             <div className="flex items-start space-x-3">
-              <div className="w-8 h-8 rounded-full bg-vineyard-600 text-white flex items-center justify-center">
-                <Bot size={16} />
+              <div className="w-10 h-10 rounded-full bg-sage-600 text-white flex items-center justify-center shadow-md">
+                <Bot size={18} />
               </div>
-              <div className="bg-gray-100 px-4 py-2 rounded-lg">
+              <div className="bg-tuscan-50 border border-tuscan-200 px-5 py-3 rounded-2xl shadow-sm">
                 <div className="flex items-center space-x-2">
-                  <Loader2 size={16} className="animate-spin" />
-                  <span className="text-sm text-gray-600">Thinking...</span>
+                  <Loader2 size={18} className="animate-spin text-terracotta-600" />
+                  <span className="text-sm text-charcoal-700">Curating your perfect experience...</span>
                 </div>
               </div>
             </div>
@@ -146,21 +146,21 @@ export function ChatInterface() {
         <div ref={messagesEndRef} />
       </div>
 
-      <form onSubmit={handleSubmit} className="flex space-x-2">
+      <form onSubmit={handleSubmit} className="flex space-x-3">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask about wineries, restaurants, hotels, or experiences..."
-          className="flex-1 input-field"
+          placeholder="Ask about wineries, restaurants, experiences, or anything wine country..."
+          className="flex-1 input-field shadow-sm"
           disabled={isLoading}
         />
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className="btn-primary flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-primary bg-terracotta-600 hover:bg-terracotta-700 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed min-w-[120px] justify-center"
         >
-          <Send size={16} />
+          <Send size={18} />
           <span>Send</span>
         </button>
       </form>

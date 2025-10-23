@@ -15,18 +15,18 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-wine-600 hover:bg-wine-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply bg-terracotta-600 hover:bg-terracotta-700 text-white font-medium py-3 px-6 rounded-full transition-all duration-300 shadow-md hover:shadow-lg;
   }
-  
+
   .btn-secondary {
-    @apply bg-vineyard-600 hover:bg-vineyard-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply bg-sage-600 hover:bg-sage-700 text-white font-medium py-3 px-6 rounded-full transition-all duration-300 shadow-md hover:shadow-lg;
   }
-  
+
   .card {
-    @apply bg-white rounded-xl shadow-lg border border-gray-100 p-6;
+    @apply bg-white rounded-2xl shadow-xl border border-tuscan-100 p-8 transition-all duration-300 hover:shadow-2xl;
   }
-  
+
   .input-field {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wine-500 focus:border-transparent transition-all duration-200;
+    @apply w-full px-4 py-3 border border-tuscan-200 rounded-lg bg-white focus:ring-2 focus:ring-terracotta-400 focus:border-transparent transition-all duration-300;
   }
 }

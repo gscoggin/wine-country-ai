@@ -9,9 +9,9 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 
 export const metadata: Metadata = {
-  title: 'Wine Country AI - Your Personal Wine Country Guide',
-  description: 'Discover the best wineries, restaurants, hotels, and experiences in Sonoma, Napa, and Mendocino with AI-powered recommendations.',
-  keywords: 'wine country, napa valley, sonoma, mendocino, wineries, restaurants, hotels, travel guide',
+  title: 'Sip.AI - Your Personal Wine Country Concierge',
+  description: 'Discover the finest wineries, restaurants, and experiences in Sonoma, Napa, and Mendocino with your AI-powered wine country guide.',
+  keywords: 'wine country, napa valley, sonoma, mendocino, wineries, restaurants, hotels, travel guide, ai wine concierge',
 }
 
 export default function RootLayout({
@@ -21,19 +21,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="min-h-screen bg-gradient-to-br from-wine-50 to-vineyard-50">
+      <body className="min-h-screen bg-gradient-to-br from-tuscan-50 via-white to-terracotta-50">
         <AuthProvider>
           <div className="min-h-screen flex flex-col">
             <Header />
-            
+
             <main className="flex-1">
               {children}
             </main>
-            
-            <footer className="bg-wine-800 text-white py-8">
+
+            <footer className="bg-charcoal-900 text-tuscan-100 py-12">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center">
-                  <p>&copy; 2024 Wine Country AI. Your personal guide to Northern California wine country.</p>
+                <div className="text-center space-y-2">
+                  <p className="text-lg font-serif">Sip.AI</p>
+                  <p className="text-sm text-tuscan-300">&copy; 2024 Sip.AI. Your personal wine country concierge.</p>
                 </div>
               </div>
             </footer>
