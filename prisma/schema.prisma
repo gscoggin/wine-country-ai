@@ -1,0 +1,506 @@
+// Sip.AI Database Schema
+// Designed for multi-region, multi-vertical expansion
+// Supports: Wine Country, Hospitality, Restaurants, Travel
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER MANAGEMENT & AUTHENTICATION
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?   // Hashed password for credential login
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // User preferences and interests
+  preferences   UserPreferences?
+  interests     UserInterest[]
+
+  // User content
+  trips         Trip[]
+  favorites     Favorite[]
+  reviews       Review[]
+  bookings      Booking[]
+
+  // Authentication
+  accounts      Account[]
+  sessions      Session[]
+
+  @@index([email])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ============================================
+// USER PREFERENCES & INTERESTS
+// ============================================
+
+model UserPreferences {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Wine preferences
+  favoriteWineTypes     String[] // ["Cabernet Sauvignon", "Pinot Noir", ...]
+  priceRangeMin         Int?
+  priceRangeMax         Int?
+
+  // Dietary preferences
+  dietaryRestrictions   String[] // ["vegetarian", "gluten-free", ...]
+  cuisinePreferences    String[] // ["Italian", "French", ...]
+
+  // Travel preferences
+  accommodationType     String[] // ["luxury", "boutique", ...]
+  experienceInterests   String[] // ["wine tasting", "spa", "hot air balloon", ...]
+
+  // Notification preferences
+  emailNotifications    Boolean  @default(true)
+  marketingEmails       Boolean  @default(false)
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model UserInterest {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  category    String   // "wine_type", "cuisine", "experience", "region"
+  value       String   // The specific interest value
+  strength    Int      @default(1) // How strong is this interest (1-10)
+
+  createdAt   DateTime @default(now())
+
+  @@unique([userId, category, value])
+  @@index([userId])
+}
+
+// ============================================
+// REGIONS & LOCATIONS (Multi-Region Support)
+// ============================================
+
+model Region {
+  id            String   @id @default(cuid())
+  name          String   @unique // "Napa Valley", "Sonoma County", "Tuscany", etc.
+  slug          String   @unique
+  country       String   // "USA", "Italy", "France"
+  state         String?  // "California", "Tuscany"
+
+  description   String?
+  image         String?
+  featured      Boolean  @default(false)
+  active        Boolean  @default(true)
+
+  // Geographic data
+  latitude      Float?
+  longitude     Float?
+
+  // SEO
+  metaTitle     String?
+  metaDescription String?
+
+  // Relations
+  venues        Venue[]
+  experiences   Experience[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([slug])
+  @@index([country])
+}
+
+// ============================================
+// VENUES (Unified model for all venue types)
+// ============================================
+
+enum VenueType {
+  WINERY
+  RESTAURANT
+  HOTEL
+  BAR
+  CAFE
+  SPA
+  TASTING_ROOM
+  EVENT_SPACE
+}
+
+model Venue {
+  id            String     @id @default(cuid())
+  name          String
+  slug          String     @unique
+  type          VenueType
+
+  // Location
+  regionId      String
+  region        Region     @relation(fields: [regionId], references: [id])
+  address       String?
+  city          String?
+  state         String?
+  zipCode       String?
+  latitude      Float?
+  longitude     Float?
+
+  // Basic info
+  description   String?
+  longDescription String?
+  phone         String?
+  email         String?
+  website       String?
+  bookingUrl    String?
+
+  // Media
+  images        String[]   // Array of image URLs
+  logo          String?
+  videoUrl      String?
+
+  // Pricing
+  priceLevel    Int?       @default(2) // 1-4 ($, $$, $$$, $$$$)
+
+  // Ratings
+  rating        Float?     @default(0)
+  reviewCount   Int        @default(0)
+
+  // Status
+  featured      Boolean    @default(false)
+  verified      Boolean    @default(false)
+  active        Boolean    @default(true)
+
+  // Hours of operation
+  hours         Json?      // { "monday": { "open": "09:00", "close": "17:00" }, ... }
+
+  // SEO
+  metaTitle     String?
+  metaDescription String?
+
+  // Type-specific data (stored as JSON for flexibility)
+  metadata      Json?      // Winery: { tastingFee, wineTypes, ... }, Restaurant: { cuisine, michelin, ... }
+
+  // Relations
+  amenities     VenueAmenity[]
+  specialties   VenueSpecialty[]
+  reviews       Review[]
+  favorites     Favorite[]
+  tripItems     TripItem[]
+  bookings      Booking[]
+  experiences   Experience[]
+
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@index([slug])
+  @@index([type])
+  @@index([regionId])
+  @@index([featured])
+}
+
+// ============================================
+// AMENITIES & SPECIALTIES (Flexible Taxonomy)
+// ============================================
+
+model Amenity {
+  id          String         @id @default(cuid())
+  name        String         @unique
+  slug        String         @unique
+  category    String         // "accessibility", "services", "facilities"
+  icon        String?
+
+  venues      VenueAmenity[]
+
+  @@index([category])
+}
+
+model VenueAmenity {
+  id        String   @id @default(cuid())
+  venueId   String
+  venue     Venue    @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  amenityId String
+  amenity   Amenity  @relation(fields: [amenityId], references: [id], onDelete: Cascade)
+
+  @@unique([venueId, amenityId])
+  @@index([venueId])
+  @@index([amenityId])
+}
+
+model Specialty {
+  id          String           @id @default(cuid())
+  name        String           @unique
+  slug        String           @unique
+  category    String           // "wine_type", "cuisine", "hotel_type"
+
+  venues      VenueSpecialty[]
+
+  @@index([category])
+}
+
+model VenueSpecialty {
+  id          String    @id @default(cuid())
+  venueId     String
+  venue       Venue     @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  specialtyId String
+  specialty   Specialty @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
+
+  @@unique([venueId, specialtyId])
+  @@index([venueId])
+  @@index([specialtyId])
+}
+
+// ============================================
+// EXPERIENCES (Tours, Classes, Events)
+// ============================================
+
+model Experience {
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+
+  // Location
+  regionId      String?
+  region        Region?  @relation(fields: [regionId], references: [id])
+  venueId       String?
+  venue         Venue?   @relation(fields: [venueId], references: [id])
+
+  // Details
+  description   String?
+  longDescription String?
+  duration      Int?     // Duration in minutes
+  groupSize     Int?     // Max group size
+  difficulty    String?  // "easy", "moderate", "challenging"
+
+  // Pricing
+  price         Float?
+  pricePerPerson Float?
+
+  // Media
+  images        String[]
+  videoUrl      String?
+
+  // Scheduling
+  seasonal      Boolean  @default(false)
+  availableMonths String[] // ["January", "February", ...]
+  advanceBookingDays Int?  // How many days in advance to book
+
+  // Status
+  featured      Boolean  @default(false)
+  active        Boolean  @default(true)
+
+  // Relations
+  bookings      Booking[]
+  reviews       Review[]
+  favorites     Favorite[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([slug])
+  @@index([regionId])
+  @@index([venueId])
+}
+
+// ============================================
+// TRIP PLANNING
+// ============================================
+
+model Trip {
+  id          String     @id @default(cuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?
+
+  startDate   DateTime?
+  endDate     DateTime?
+
+  status      String     @default("planning") // "planning", "booked", "completed", "cancelled"
+
+  items       TripItem[]
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+model TripItem {
+  id          String    @id @default(cuid())
+  tripId      String
+  trip        Trip      @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  venueId     String?
+  venue       Venue?    @relation(fields: [venueId], references: [id])
+
+  date        DateTime?
+  time        String?
+  notes       String?
+  order       Int       @default(0)
+
+  status      String    @default("planned") // "planned", "booked", "completed", "cancelled"
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([tripId])
+  @@index([venueId])
+}
+
+// ============================================
+// FAVORITES & BOOKMARKS
+// ============================================
+
+enum FavoriteType {
+  VENUE
+  EXPERIENCE
+}
+
+model Favorite {
+  id            String       @id @default(cuid())
+  userId        String
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type          FavoriteType
+
+  venueId       String?
+  venue         Venue?       @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  experienceId  String?
+  experience    Experience?  @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+
+  notes         String?
+  tags          String[]
+
+  createdAt     DateTime     @default(now())
+
+  @@unique([userId, type, venueId])
+  @@unique([userId, type, experienceId])
+  @@index([userId])
+}
+
+// ============================================
+// REVIEWS & RATINGS
+// ============================================
+
+model Review {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  venueId       String?
+  venue         Venue?      @relation(fields: [venueId], references: [id], onDelete: Cascade)
+
+  experienceId  String?
+  experience    Experience? @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+
+  rating        Int         // 1-5 stars
+  title         String?
+  content       String?
+
+  verified      Boolean     @default(false) // Verified purchase/visit
+  helpful       Int         @default(0)     // Helpful votes
+
+  images        String[]
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([venueId])
+  @@index([experienceId])
+}
+
+// ============================================
+// BOOKINGS
+// ============================================
+
+model Booking {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  venueId       String?
+  venue         Venue?      @relation(fields: [venueId], references: [id])
+
+  experienceId  String?
+  experience    Experience? @relation(fields: [experienceId], references: [id])
+
+  bookingDate   DateTime
+  bookingTime   String?
+
+  guestCount    Int         @default(1)
+
+  status        String      @default("pending") // "pending", "confirmed", "completed", "cancelled"
+
+  totalPrice    Float?
+  currency      String      @default("USD")
+
+  // Contact info
+  contactName   String?
+  contactEmail  String?
+  contactPhone  String?
+
+  specialRequests String?
+
+  // External booking reference
+  externalBookingId String?
+  externalProvider  String?
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([venueId])
+  @@index([experienceId])
+  @@index([status])
+}
