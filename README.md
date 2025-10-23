@@ -62,9 +62,10 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed cost monitoring and deployment
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 - OpenAI API key
+- **Podman** (free, open-source) or Docker (for database)
 
 ### Installation
 

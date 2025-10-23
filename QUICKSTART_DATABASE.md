@@ -4,17 +4,31 @@ Get your Sip.AI database running in under 5 minutes!
 
 ## Prerequisites
 
-- Docker Desktop installed and running
+- **Podman** or Docker installed (Podman is free and open-source!)
 - Node.js 18+ installed
 - Terminal/Command Line access
+
+> **💡 Using Podman (Recommended - Free!):** Podman is a free, open-source alternative to Docker with no subscription required. See `PODMAN_SETUP.md` for installation instructions.
 
 ## Steps
 
 ### 1. Start PostgreSQL Database
 
+**With Podman (Recommended):**
+```bash
+# Install Podman first (see PODMAN_SETUP.md)
+brew install podman podman-compose  # macOS
+podman machine init
+podman machine start
+
+# Start PostgreSQL
+podman-compose up -d
+```
+
+**With Docker:**
 ```bash
 # Start PostgreSQL in Docker
-docker-compose up -d
+docker compose up -d
 ```
 
 This starts:

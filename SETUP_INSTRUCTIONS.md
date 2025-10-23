@@ -6,29 +6,69 @@ Follow these steps to get Sip.AI running with a fully populated database.
 
 Before you begin, make sure you have:
 
-- ✅ **Docker Desktop** installed and running (for PostgreSQL)
+- ✅ **Podman or Docker** installed (Podman is free! See `PODMAN_SETUP.md`)
 - ✅ **Node.js 18+** installed
 - ✅ **OpenAI API key** (from https://platform.openai.com/api-keys)
 - ✅ Terminal/Command line access
+
+> **💡 Recommended: Use Podman (Free & Open Source)**
+>
+> Podman is a free alternative to Docker with no subscription required.
+>
+> **Installation:** See `PODMAN_SETUP.md` for detailed instructions
+>
+> **Quick Install (macOS):**
+> ```bash
+> brew install podman podman-compose
+> podman machine init
+> podman machine start
+> ```
 
 ---
 
 ## Step-by-Step Setup
 
-### 1. Install Docker Desktop (if not already installed)
+### 1. Install Podman (Recommended - Free!) or Docker
 
-**Mac:**
-- Download from: https://www.docker.com/products/docker-desktop/
-- Install and start Docker Desktop
-- Verify it's running (you'll see a whale icon in your menu bar)
+**Option A: Podman (Recommended - No Subscription Required)**
+
+**macOS:**
+```bash
+brew install podman podman-compose
+podman machine init
+podman machine start
+podman --version  # Verify installation
+```
 
 **Windows:**
+- Download Podman Desktop: https://podman-desktop.io/downloads
+- Install and run (it will set up WSL2 automatically)
+
+**Linux:**
+```bash
+sudo apt-get install podman  # Ubuntu/Debian
+# or
+sudo dnf install podman      # Fedora/RHEL
+pip3 install podman-compose
+```
+
+**See `PODMAN_SETUP.md` for detailed instructions**
+
+---
+
+**Option B: Docker Desktop (Requires Subscription for Business Use)**
+
+**macOS/Windows:**
 - Download from: https://www.docker.com/products/docker-desktop/
 - Install and start Docker Desktop
-- Verify it's running (check system tray)
+- Verify it's running
 
-**Verify Docker is installed:**
+**Verify installation:**
 ```bash
+# Podman
+podman --version
+
+# or Docker
 docker --version
 ```
 
@@ -36,8 +76,17 @@ docker --version
 
 ### 2. Start PostgreSQL Database
 
+**With Podman:**
 ```bash
-# Start PostgreSQL and pgAdmin in Docker
+# Start PostgreSQL and pgAdmin with Podman
+podman-compose up -d
+# or (Podman 4.1+)
+podman compose up -d
+```
+
+**With Docker:**
+```bash
+# Start PostgreSQL and pgAdmin with Docker
 docker compose up -d
 ```
 
@@ -46,6 +95,13 @@ This command starts:
 - **pgAdmin** (database UI) on `http://localhost:5050`
 
 **Verify it's running:**
+
+**Podman:**
+```bash
+podman ps
+```
+
+**Docker:**
 ```bash
 docker ps
 ```

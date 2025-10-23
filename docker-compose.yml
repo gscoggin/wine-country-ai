@@ -1,5 +1,16 @@
 version: '3.8'
 
+# This compose file works with both Docker and Podman
+# Install Podman: https://podman.io/getting-started/installation
+#
+# Usage with Podman:
+#   podman-compose up -d        (if podman-compose is installed)
+#   podman compose up -d        (Podman 4.1+ with compose plugin)
+#   podman play kube compose.yml (alternative)
+#
+# Usage with Docker:
+#   docker compose up -d
+
 services:
   postgres:
     image: postgres:15-alpine
