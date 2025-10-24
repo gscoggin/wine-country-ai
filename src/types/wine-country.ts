@@ -76,27 +76,47 @@ export interface Experience {
   provider: string
 }
 
-export interface Trip {
+export interface TripVenue {
   id: string
-  userId: string
   name: string
-  description: string
-  startDate: Date
-  endDate: Date
-  region: 'Sonoma' | 'Napa' | 'Mendocino' | 'All'
-  itinerary: TripItem[]
-  createdAt: Date
-  updatedAt: Date
+  slug: string
+  type: string
+  region: string
+  address?: string | null
+  phone?: string | null
+  website?: string | null
+  description?: string | null
+  priceLevel?: number | null
+  rating?: number | null
+  images: string[]
+  amenities: string[]
+  specialties: string[]
 }
 
 export interface TripItem {
   id: string
-  type: 'winery' | 'restaurant' | 'hotel' | 'experience'
-  itemId: string
-  date: Date
-  time?: string
-  notes?: string
-  booked: boolean
+  venueId: string
+  date: Date | null
+  startTime?: string | null
+  endTime?: string | null
+  notes?: string | null
+  status: string
+  order: number
+  venue: TripVenue
+}
+
+export interface Trip {
+  id: string
+  name: string
+  description?: string | null
+  startDate: Date
+  endDate: Date
+  status: string
+  isPublic: boolean
+  metadata?: Record<string, any> | null
+  itinerary: TripItem[]
+  createdAt: Date
+  updatedAt: Date
 }
 
 export interface User {

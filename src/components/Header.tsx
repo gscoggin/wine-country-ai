@@ -2,17 +2,18 @@
 
 import { useState } from 'react'
 import { User, LogOut, Menu, X } from 'lucide-react'
-import { useAuth } from './AuthProvider'
+import { signOut, useSession } from 'next-auth/react'
 import { LoginModal } from './LoginModal'
 
 export function Header() {
-  const { user, logout } = useAuth()
+  const { data: session, status } = useSession()
+  const user = session?.user
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [showUserMenu, setShowUserMenu] = useState(false)
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: '/' })
     setShowUserMenu(false)
   }
 

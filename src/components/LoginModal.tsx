@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { X, Mail, Lock, User, Eye, EyeOff } from 'lucide-react'
-import { useAuth } from './AuthProvider'
+import { signIn } from 'next-auth/react'
 
 interface LoginModalProps {
   isOpen: boolean
@@ -11,7 +11,6 @@ interface LoginModalProps {
 }
 
 export function LoginModal({ isOpen, onClose, defaultMode = 'login' }: LoginModalProps) {
-  const { login, register } = useAuth()
   const [mode, setMode] = useState<'login' | 'register'>(defaultMode)
   const [formData, setFormData] = useState({
     name: '',
@@ -40,12 +39,17 @@ export function LoginModal({ isOpen, onClose, defaultMode = 'login' }: LoginModa
 
     try {
       if (mode === 'login') {
-        const success = await login(formData.email, formData.password)
-        if (success) {
+        const result = await signIn('credentials', {
+          redirect: false,
+          email: formData.email,
+          password: formData.password,
+        })
+
+        if (result?.error) {
+          setError(result.error)
+        } else {
           onClose()
           setFormData({ name: '', email: '', password: '', confirmPassword: '' })
-        } else {
-          setError('Invalid email or password')
         }
       } else {
         if (formData.password !== formData.confirmPassword) {
@@ -53,12 +57,38 @@ export function LoginModal({ isOpen, onClose, defaultMode = 'login' }: LoginModa
           setIsLoading(false)
           return
         }
-        const success = await register(formData.email, formData.password, formData.name)
-        if (success) {
+
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+          }),
+        })
+
+        if (!response.ok) {
+          const data = await response.json().catch(() => ({ error: 'Registration failed. Please try again.' }))
+          setError(data.error || 'Registration failed. Please try again.')
+          setIsLoading(false)
+          return
+        }
+
+        // Auto sign-in after successful registration
+        const result = await signIn('credentials', {
+          redirect: false,
+          email: formData.email,
+          password: formData.password,
+        })
+
+        if (result?.error) {
+          setError(result.error)
+        } else {
           onClose()
           setFormData({ name: '', email: '', password: '', confirmPassword: '' })
-        } else {
-          setError('Registration failed. Please try again.')
         }
       }
     } catch (error) {
