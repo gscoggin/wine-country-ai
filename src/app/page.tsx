@@ -86,11 +86,17 @@ export default function Home() {
                 Experience the finest wineries, restaurants, and hideaways across Sonoma, Napa, and Mendocino—curated by your AI sommelier.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <a href="/directory" className="btn-primary bg-terracotta-600 hover:bg-terracotta-700 text-white shadow-2xl hover:shadow-3xl text-center min-w-[200px] backdrop-blur-sm">
-                  Explore Discoveries
-                </a>
-                <a href="/trips" className="btn-secondary bg-white/90 backdrop-blur-md hover:bg-white text-charcoal-900 border-2 border-white text-center min-w-[200px]">
-                  Plan Your Journey
+                <button
+                  onClick={() => {
+                    const chatSection = document.getElementById('chat-concierge')
+                    chatSection?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  }}
+                  className="btn-primary bg-terracotta-600 hover:bg-terracotta-700 text-white shadow-2xl hover:shadow-3xl text-center min-w-[200px] backdrop-blur-sm"
+                >
+                  Plan Your Visit
+                </button>
+                <a href="/directory" className="btn-secondary bg-white/90 backdrop-blur-md hover:bg-white text-charcoal-900 border-2 border-white text-center min-w-[200px]">
+                  Browse Itineraries
                 </a>
               </div>
             </div>
@@ -118,7 +124,7 @@ export default function Home() {
       <AdBanner />
 
       {/* Chat Interface Section */}
-      <section className="py-24 bg-gradient-to-b from-white to-tuscan-50">
+      <section id="chat-concierge" className="py-24 bg-gradient-to-b from-white to-tuscan-50 scroll-mt-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 space-y-4">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-charcoal-900 mb-4">
