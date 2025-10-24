@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { FormEvent, useCallback, useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import {
@@ -408,11 +409,15 @@ export default function DirectoryPage() {
               return (
                 <div key={venue.id} className="card hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                   <div className="relative mb-4">
-                    <img
-                      src={venue.images?.[0] || venue.imageUrl || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800'}
-                      alt={venue.name}
-                      className="w-full h-48 sm:h-56 object-cover rounded-lg"
-                    />
+                    <div className="relative w-full h-48 sm:h-56">
+                      <Image
+                        src={venue.images?.[0] || venue.imageUrl || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800'}
+                        alt={venue.name}
+                        fill
+                        className="object-cover rounded-lg"
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      />
+                    </div>
                     <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium flex items-center space-x-1.5 shadow-md">
                       {getItemIcon(venue)}
                       <span className="capitalize">{venue.type.toLowerCase()}</span>

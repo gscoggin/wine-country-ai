@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 interface Ad {
@@ -70,9 +71,11 @@ export function AdBanner() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:justify-between">
           <div className="flex items-start sm:items-center space-x-3 sm:space-x-4 flex-1">
-            <img
+            <Image
               src={currentAd.imageUrl}
               alt={currentAd.title}
+              width={64}
+              height={64}
               className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg object-cover shadow-md flex-shrink-0"
             />
             <div className="flex-1 min-w-0">

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { MapPin, Wine, Users, Star } from 'lucide-react'
 
 interface Region {
@@ -48,10 +49,12 @@ export function WineRegions() {
       {regions.map((region) => (
         <div key={region.name} className="card group hover:shadow-xl transition-shadow duration-300 flex flex-col">
           <div className={`h-48 bg-gradient-to-br ${region.color} rounded-lg mb-4 relative overflow-hidden`}>
-            <img
+            <Image
               src={region.imageUrl}
               alt={region.name}
-              className="w-full h-full object-cover opacity-80 group-hover:opacity-90 transition-opacity duration-300"
+              fill
+              className="object-cover opacity-80 group-hover:opacity-90 transition-opacity duration-300"
+              sizes="(min-width: 1024px) 33vw, 100vw"
             />
             <div className="absolute inset-0 bg-black bg-opacity-20"></div>
             <div className="absolute bottom-4 left-4 text-white">

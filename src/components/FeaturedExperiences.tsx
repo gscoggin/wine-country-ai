@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Star, MapPin, Clock, Users } from 'lucide-react'
 
 interface Experience {
@@ -96,11 +97,15 @@ export function FeaturedExperiences() {
       {experiences.map((experience) => (
         <div key={experience.id} className="card group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
           <div className="relative">
-            <img
-              src={experience.imageUrl}
-              alt={experience.name}
-              className="w-full h-48 object-cover rounded-lg mb-4"
-            />
+            <div className="relative w-full h-48 mb-4">
+              <Image
+                src={experience.imageUrl}
+                alt={experience.name}
+                fill
+                className="object-cover rounded-lg"
+                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              />
+            </div>
             <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-sm font-medium">
               {experience.type}
             </div>
